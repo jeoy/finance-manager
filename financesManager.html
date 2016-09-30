@@ -1,0 +1,594 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+<title> financeManager </title>
+<meta charset = "utf-8"/>
+<style type="text/css">
+body{
+  background-color: #f4efd9;
+  padding-left: 40px;
+}
+ul{
+  margin:0px;
+}
+
+span{
+  display: inline-block;
+  width: 90px; 
+  text-align: center;
+  margin-right: 5px;
+}
+#dataInput{
+  margin: 1em 0;
+}
+#tableGroup{
+  margin: 1em 0;
+}
+
+#add{
+  width: 150px;
+ 
+  margin-left: 220px;
+  font-size: 1.2em;
+  cursor:pointer;
+
+}
+label {
+ 
+  display: inline-block;
+  width: 150px;
+}
+input {
+  vertical-align: middle;
+ 
+
+}
+input.money{
+  margin-bottom: 3px;
+  width: 50px;
+  /*background:gold;*/
+  /*border: red solid 1px;*/
+}
+
+.focus{
+  background: gold;
+ 
+}
+ 
+
+td,th{
+    vertical-align: middle;
+  min-width: 100px;
+
+ 
+}
+
+#tableSubGroup {
+    max-height:  400px;
+    overflow: scroll;
+     
+    ::-webkit-scrollbar{width:5px};
+}
+#tableGroup table {
+
+  text-align:center;
+  border-collapse: collapse;
+  /*margin-bottom: 2em;*/
+  
+}
+
+#tableGroup table tbody{
+     margin-bottom: 2em;
+     border:  2px dotted gray;
+
+}
+
+
+tr{
+  /*background-color: red;*/
+  border: 2px inset transparent ;
+  
+  /*border: 1px solid gold ;*/
+}
+li{
+  float: left;
+  text-align: center;
+  list-style:  none;
+  width:  55px;
+  height: 55px;
+  border: 1px black solid;
+  /*background-color: gray;*/
+}
+ul{
+  /*margin: 0px;*/
+  padding: 0px;
+
+}
+.clear{
+  clear:both;
+
+}
+.currentTab{
+  background-color: #cbbba1;
+  color: white;
+}
+.gray{
+  background-color: #cbbba1;
+}
+
+.goldbk{
+  border: 2px dashed gray;
+}
+
+
+
+ol{
+  height: 200px;
+  overflow: scroll;
+  border: 1px groove gray;
+  width:300px;
+}
+#holder{
+  /*z-index: -1;*/
+  margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
+
+
+#tips{
+  margin-left: 40px;
+  color:red;
+  width: 200px;
+}
+
+#illidaria{
+  position: fixed;
+  bottom: 1%;
+  right: 2%;
+  width: 60px;
+}
+#moneyCount {
+  margin-top: 2em;
+}
+
+p.tableTitle{
+
+  margin:0px;
+  margin-top: 5px; 
+  padding: 5px 0;
+  width: 297px;
+  border: solid 1px black;
+  /*background-color: red;*/
+  padding-left: 115px;
+}
+
+#clearBt{
+  position: fixed;
+  top: 0;
+  right: 1%;
+}
+</style>
+
+<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="scripts/raphael-min.js"></script>
+
+</head>
+ 
+<body  >
+<h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
+ 
+<div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
+
+<img id ="illidaria" src="img/Illidaria.png"></img>
+<div id = "dataInput"> </div>
+<img  id="add" src="img/buttonOut.png"></img>
+<!-- <button id="add">加入账本</button> -->
+<button id = "clearBt" onclick="clearAll()">不要点</button>
+
+<div id = "tableGroup"></div>
+ 
+<table id = "pieChart" >
+  
+  
+</table>
+
+<div id="holder"> </div>
+
+</body>
+ 
+
+<script>
+
+var financeManager = {
+  canteen:{},
+  eatingOut:{},
+  fruit:{},
+  living:{},
+  dear:{},
+  learning:{},
+  connect:{}
+}
+
+var category = ["食堂","外面吃饭","水果和零食","生活用品","晓清非要花的","学习","通讯和交通"] ;
+var categoryEle = ["canteen","eatingOut","fruit","living","dear","learning","connect"];
+
+  
+ 
+function insertNcell(eleTb,n){
+  eleTb.insertRow();
+  for (var i = 0; i < n; i++) {
+     eleTb.rows[eleTb.rows.length - 1].insertCell();
+}
+}
+
+
+
+
+
+
+
+function getStroagelength(itemName){
+  if (!window.localStorage[itemName]){
+    return 0;
+  }
+  else {
+  var obj = JSON.parse(window.localStorage[itemName]);
+  return Object.keys(obj).length;
+    }
+}
+
+ 
+function localStorageAddItem (itemName , addArr){
+  if(window.localStorage[itemName]){
+    window.localStorage[itemName] = window.localStorage[itemName].slice(0,-1) + ',' + addArr.slice(1);
+  }
+  else 
+    window.localStorage[itemName]  =   addArr ;
+}
+
+$(function(){
+
+  function initialInput(){
+  var inputTb = document.createElement("table");
+
+  inputTb.id = "inputTb";
+
+
+  insertNcell(inputTb,4);
+  inputTb.rows[0].cells[1].innerHTML = "金额";
+  inputTb.rows[0].cells[2].innerHTML = "备注";
+  // inputTb.rows[0].cells[3].innerHTML = "时间";
+
+   inputEle = {};
+  for (var i = 0; i < category.length; i++) {
+      inputEle[categoryEle[i]] =  document.createElement("input");
+      inputEle[categoryEle[i] + 'Bk'] =  document.createElement("input");
+      inputEle[categoryEle[i]].className = "money";
+      inputEle[categoryEle[i]].setAttribute("type","number")
+ 
+  }
+
+  for (var i = 0; i < category.length; i++) {
+    insertNcell(inputTb,4);
+    inputTb.rows[inputTb.rows.length - 1].cells[0].innerHTML = category[i];
+    inputTb.rows[inputTb.rows.length - 1].cells[1].innerHTML = "￥";
+    inputTb.rows[inputTb.rows.length - 1].cells[1].appendChild(inputEle[categoryEle[i]]);
+
+    inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[categoryEle[i] +'Bk']);
+     
+  }
+   document.getElementById("dataInput").appendChild(inputTb);
+    
+
+  
+}
+
+    initialInput();
+
+function update(){
+  if($("#tableGroup")){
+    $("#tableGroup").remove();
+  }
+   // $("#tableGroup").appendTo("body");
+ 
+  var warpDiv = $("<div   id = 'tableSubGroup'></div>");
+  var tabUl = $("<div  ></div>");
+  var selectTab = $("<ul id ='selectTab' class ='clear'></ul>")
+  selectTab.appendTo(tabUl);
+  var listShow = {},
+      moneyCount = {};
+
+  for (var j = 0; j < category.length; j++) {
+    var newTable = $("<table id = 'table"+j+"'></table>");
+    var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
+    selectTab.append(tab);
+
+    if (j== 0){
+      tab.addClass("currentTab");
+    }
+    if(window.localStorage[categoryEle[j]] ){
+     listShow[categoryEle[j]] =  JSON.parse( window.localStorage[categoryEle[j]] );
+
+  }
+  else{
+    listShow[categoryEle[j]] = {};
+  }
+ 
+  
+
+  //表头
+   var newTitleRow = $(" <p class = 'clear tableTitle'>    <span>金额</span>  <span>花哪去了</span> <span>哪天花的</span>  </p> "); 
+    
+  for (var i = 0; i < Object.keys(listShow[categoryEle[j]]).length ; i++) {
+      newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
+    if (!moneyCount[categoryEle[j]]) {
+          moneyCount[categoryEle[j]] = 0;
+        }
+        moneyCount[categoryEle[j]] += +listShow[categoryEle[j]][i][0];
+    newTable.append(newRow);
+  }
+
+  if(Object.keys(listShow[categoryEle[j]]).length %2 ){
+    var nullRow = $("<tr><td></td></tr>");
+    nullRow.hide();
+    newTable.append(nullRow);
+  }
+  newTable.append("<p id='moneyCount' >总额是: ￥<strong>"+ (moneyCount[categoryEle[j]]||0)+"</strong></p>")
+   
+  if(j == 0){
+    newTable.appendTo(warpDiv);
+  }
+  else{
+    newTable.appendTo(warpDiv).hide();
+  }
+  
+  
+} 
+  selectTab.append("<div class = 'clear'/>");
+   var $newTableGroup = $("<div id = 'tableGroup' ></div>");
+ 
+  $newTableGroup.appendTo("body");
+
+  tabUl.appendTo("#tableGroup");
+  newTitleRow.appendTo("#tableGroup");
+  warpDiv.appendTo("#tableGroup");
+
+  var $selectLi = $("#selectTab li");
+  $selectLi.click(function(){
+    $(this).addClass("currentTab").siblings().removeClass("currentTab");
+    var index = $selectLi.index(this);
+    $("#tableGroup table:eq("+index+")").show( ).siblings().hide();
+  })
+
+
+
+  $("#tableGroup tr:even,this").addClass("gray"); 
+  $("#tableGroup tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
+
+  $("#tableGroup tr").click(function(){
+           
+      $(this)[$(this).hasClass("goldbk")?"removeClass":"addClass"]("goldbk").find(":checkbox").attr('checked',$(this).hasClass("goldbk"));
+     
+
+  });
+  $("#tableGroup tr:contains('')").hide();
+  
+  $("#tableGroup :radio:checked").parent().parent().css({"background-color":"gold"}); //这样会写成内联样式 后面的class修改不了
+
+  $("#selectTab li").css({"cursor":"pointer"});
+
+
+  genPieChart(moneyCount);
+  draw();
+}
+  
+update();
+  
+
+
+  $("#add").mousedown(function(){
+     this.src = "img/buttonIn.png";
+  }).mouseup(function(){
+    this.src = "img/buttonOut.png";
+  })
+ 
+
+
+
+
+  $("#add").click( function(){
+
+  // var financeManager = {a};
+  var money,
+      backup,
+      date, 
+      curTbLen;
+  
+  var inputTb = document.getElementById("inputTb");
+  date = $("#date").val();
+  $("#tips").remove();
+  if(date){ 
+
+
+    for (var i = 0; i < category.length; i++) {
+      if(inputTb.rows[i+1].cells[1].children[0].value){
+        var objTemp = {};
+  
+        money = inputTb.rows[i+1].cells[1].children[0].value;
+        backup = inputTb.rows[i+1].cells[2].children[0].value;
+        date  =  date;
+
+        if(/\.\d$/.test(money)){
+           money = money +"0";
+        }
+        else if(!/\./.test(money)){
+           money = money +".00";
+        }
+
+         
+        inputTb.rows[i+1].cells[1].children[0].value = "";
+        inputTb.rows[i+1].cells[2].children[0].value = "";
+        curTbLen = getStroagelength(categoryEle[i]);
+        objTemp[curTbLen]= [money,backup,date];
+  
+        localStorageAddItem( categoryEle[i], JSON.stringify( objTemp ));
+  
+  
+        var newRow = $("<tr><td>￥"+money+"</td><td>"+backup+"</td><td>"+date+"</td></tr>");  
+      
+        newRow.appendTo("#table"+i).prepend("<td><input type='checkbox' name='choice' value=''/></td>")
+        if(curTbLen%2 == 0){
+          newRow.addClass("gray");
+        }
+      }
+    }
+ 
+  }
+  else{
+    $("#datePara").append(" <span id = 'tips'> <---这里要选个日期才行哦</span> ");
+  }
+   
+   update();
+
+});
+
+
+ 
+
+});
+
+function genPieChart( obj){
+
+  var $pie;
+  var percent;
+  if($("#pieChart")){
+    $("#pieChart").remove();
+  }
+
+  $newPieChart = $("<table id = 'pieChart' ></table>");
+  $newPieChart.appendTo("body");
+  if($("#holder")){
+    $("#holder").remove();
+  }
+  $newPie  = $("<div id = 'holder' ></div>");
+  $newPie.appendTo("body");
+  $pie = $("#pieChart");
+  percent = calPercent(obj);
+  for (var i = 0; i < category.length; i++) {
+        
+        if(obj[categoryEle[i]]){
+          if(!/\./.test(obj[categoryEle[i]])){
+           obj[categoryEle[i]] = obj[categoryEle[i]] +".00";
+          }
+          var $pieTr = $("<tr></tr>");
+          var $pieTh = $("<th>" + category[i] + "\n总计￥"+parseFloat(obj[categoryEle[i]]).toFixed(2)+"\n"+percent[i]+"%</th>");
+          var $pieTd = $("<td>" + obj[categoryEle[i]] + "</td>"); 
+          $pieTr.append($pieTh);
+          $pieTr.append($pieTd);
+          $pie.append($pieTr);
+        }
+        
+      
+  }
+
+}
+
+function calPercent(obj){
+ var sum = 0;
+ var percent = [];
+  for (var i in obj){
+    if(!obj[i]) obj[i] = 0;
+    sum += +obj[i];
+  }
+  for (var i in obj){
+    percent.push((obj[i]/sum*100).toFixed(2));
+  }
+
+  return percent;
+}
+
+
+function clearAll(){
+    if(confirm("点了数据就全没了！真的要这么做吗")){
+    for (var i = 0; i < category.length; i++) {
+    
+    window.localStorage[categoryEle[i]]= '';
+  }
+   location.reload();
+  }
+  else {
+
+  }
+}
+
+Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
+    var paper = this,
+        rad = Math.PI / 180,
+        chart = this.set();
+    function sector(cx, cy, r, startAngle, endAngle, params) {
+        var x1 = cx + r * Math.cos(-startAngle * rad),
+            x2 = cx + r * Math.cos(-endAngle * rad),
+            y1 = cy + r * Math.sin(-startAngle * rad),
+            y2 = cy + r * Math.sin(-endAngle * rad);
+        return paper.path(["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"]).attr(params);
+    }
+    var angle = 0,
+        total = 0,
+        start = 0,
+        process = function (j) {
+            var value = values[j],
+                angleplus = 360 * value / total,
+                popangle = angle + (angleplus / 2),
+                color = Raphael.hsb(start, .75, 1),
+                ms = 500,
+                delta = 30,
+                bcolor = Raphael.hsb(start, 1, 1),
+                p = sector(cx, cy, r, angle, angle + angleplus, {fill: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 3}),
+                txt = paper.text(cx + (r + delta + 55) * Math.cos(-popangle * rad), cy + (r + delta + 25) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "black", opacity: 0, "font-size": 22});
+            p.mouseover(function () {
+                p.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, ms, "elastic");
+                txt.stop().animate({opacity: 1}, ms, "elastic");
+            }).mouseout(function () {
+                p.stop().animate({transform: ""}, ms, "elastic");
+                txt.stop().animate({opacity: 0}, ms);
+            });
+            angle += angleplus;
+            chart.push(p);
+            chart.push(txt);
+            start += .1;
+        };
+    for (var i = 0, ii = values.length; i < ii; i++) {
+        total += values[i];
+    }
+    for (i = 0; i < ii; i++) {
+        process(i);
+    }
+    return chart;
+};
+
+
+function draw() {
+    var values = [],
+        labels = [];
+    $("#pieChart tr").each(function () {
+        values.push(parseInt($("td", this).text(), 10));
+        labels.push($("th", this).text());
+    });
+    $("#pieChart").hide();
+    Raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
+};
+
+</script>
+
+ 
+
+
+
+
+
+
+
+
+
