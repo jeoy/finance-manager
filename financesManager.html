@@ -29,7 +29,7 @@ span{
   margin: 1em 0;
 }
 
-#add{
+#add,#deleteBt{
   width: 150px;
  
   margin-left: 220px;
@@ -63,7 +63,7 @@ input.money{
 td,th{
     vertical-align: middle;
   min-width: 100px;
-
+    text-align: center;
  
 }
 
@@ -133,7 +133,7 @@ ol{
   width:300px;
 }
 #holder{
-  /*z-index: -1;*/
+  z-index: -1;
   margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
 
 
@@ -158,7 +158,7 @@ p.tableTitle{
   margin:0px;
   margin-top: 5px; 
   padding: 5px 0;
-  width: 297px;
+  width: 295px;
   border: solid 1px black;
   /*background-color: red;*/
   padding-left: 115px;
@@ -179,23 +179,18 @@ p.tableTitle{
 <body  >
 <h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
  
-<div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
+<div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
 
 <img id ="illidaria" src="img/Illidaria.png"></img>
 <div id = "dataInput"> </div>
-<img  id="add" src="img/buttonOut.png"></img>
+ <div><img  id="add" src="img/buttonOut.png"></img></div>
 <!-- <button id="add">加入账本</button> -->
 <button id = "clearBt" onclick="clearAll()">不要点</button>
-
-<div id = "tableGroup"></div>
+<div id = "tablePerch">
+    
+</div>
  
-<table id = "pieChart" >
-  
-  
-</table>
-
-<div id="holder"> </div>
-
+ <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
 </body>
  
 
@@ -258,7 +253,7 @@ $(function(){
 
   insertNcell(inputTb,4);
   inputTb.rows[0].cells[1].innerHTML = "金额";
-  inputTb.rows[0].cells[2].innerHTML = "备注";
+  inputTb.rows[0].cells[2].innerHTML = "花到哪里啦";
   // inputTb.rows[0].cells[3].innerHTML = "时间";
 
    inputEle = {};
@@ -313,7 +308,7 @@ function update(){
 
   }
   else{
-    listShow[categoryEle[j]] = {};
+    listShow[categoryEle[j]] = [];
   }
  
   
@@ -349,7 +344,7 @@ function update(){
   selectTab.append("<div class = 'clear'/>");
    var $newTableGroup = $("<div id = 'tableGroup' ></div>");
  
-  $newTableGroup.appendTo("body");
+  $newTableGroup.appendTo("#tablePerch");
 
   tabUl.appendTo("#tableGroup");
   newTitleRow.appendTo("#tableGroup");
@@ -392,8 +387,13 @@ update();
      this.src = "img/buttonIn.png";
   }).mouseup(function(){
     this.src = "img/buttonOut.png";
-  })
+  });
  
+ $("#deleteBt").mousedown(function(){
+     this.src = "img/deleteBtIn.png";
+  }).mouseup(function(){
+    this.src = "img/deleteBtOut.png";
+  });
 
 
 
@@ -414,7 +414,7 @@ update();
 
     for (var i = 0; i < category.length; i++) {
       if(inputTb.rows[i+1].cells[1].children[0].value){
-        var objTemp = {};
+        var objTemp = [];
   
         money = inputTb.rows[i+1].cells[1].children[0].value;
         backup = inputTb.rows[i+1].cells[2].children[0].value;
@@ -431,17 +431,10 @@ update();
         inputTb.rows[i+1].cells[1].children[0].value = "";
         inputTb.rows[i+1].cells[2].children[0].value = "";
         curTbLen = getStroagelength(categoryEle[i]);
-        objTemp[curTbLen]= [money,backup,date];
+        objTemp.push([money,backup,date]);
   
         localStorageAddItem( categoryEle[i], JSON.stringify( objTemp ));
-  
-  
-        var newRow = $("<tr><td>￥"+money+"</td><td>"+backup+"</td><td>"+date+"</td></tr>");  
       
-        newRow.appendTo("#table"+i).prepend("<td><input type='checkbox' name='choice' value=''/></td>")
-        if(curTbLen%2 == 0){
-          newRow.addClass("gray");
-        }
       }
     }
  
@@ -454,8 +447,33 @@ update();
 
 });
 
+  $("#deleteBt").click(function(){
 
- 
+    var $checkedBox = $("#tableSubGroup table:visible input:checked"); 
+    var itemsNum = [];
+    var deleteTable = [];
+    if($checkedBox.length !=0 ){
+
+
+  
+     $checkedBox.parents("tr").each(function(){
+       itemsNum.push($(this).index());
+     });
+
+    var nthTable = $checkedBox.parents("table").index();
+    
+    deleteTable =  JSON.parse( window.localStorage[categoryEle[nthTable]]);
+    for (var i = itemsNum.length - 1; i >= 0; i--) {
+       deleteTable.splice(itemsNum[i],1);
+    }
+     
+    window.localStorage[categoryEle[nthTable]] = JSON.stringify(deleteTable);
+
+      update();
+    }
+  })
+  
+
 
 });
 
