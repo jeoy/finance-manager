@@ -245,6 +245,9 @@ function localStorageAddItem (itemName , addArr){
 
 $(function(){
 
+  var currentTabNum = 0;
+
+
   function initialInput(){
   var inputTb = document.createElement("table");
 
@@ -300,12 +303,12 @@ function update(){
     var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
     selectTab.append(tab);
 
-    if (j== 0){
+    if (j== currentTabNum){
       tab.addClass("currentTab");
     }
     if(window.localStorage[categoryEle[j]] ){
      listShow[categoryEle[j]] =  JSON.parse( window.localStorage[categoryEle[j]] );
-
+      
   }
   else{
     listShow[categoryEle[j]] = [];
@@ -332,7 +335,7 @@ function update(){
   }
   newTable.append("<p id='moneyCount' >总额是: ￥<strong>"+ (moneyCount[categoryEle[j]]||0)+"</strong></p>")
    
-  if(j == 0){
+  if(j == currentTabNum){
     newTable.appendTo(warpDiv);
   }
   else{
@@ -354,6 +357,7 @@ function update(){
   $selectLi.click(function(){
     $(this).addClass("currentTab").siblings().removeClass("currentTab");
     var index = $selectLi.index(this);
+    currentTabNum = index;
     $("#tableGroup table:eq("+index+")").show( ).siblings().hide();
   })
 
@@ -461,7 +465,7 @@ update();
      });
 
     var nthTable = $checkedBox.parents("table").index();
-    
+    currentTabNum = nthTable;
     deleteTable =  JSON.parse( window.localStorage[categoryEle[nthTable]]);
     for (var i = itemsNum.length - 1; i >= 0; i--) {
        deleteTable.splice(itemsNum[i],1);
