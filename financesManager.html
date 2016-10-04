@@ -8,9 +8,8 @@
 <title> financeManager </title>
 <meta charset = "utf-8"/>
 <style type="text/css">
-body{
-  background-color: #f4efd9;
-  padding-left: 40px;
+html,body{
+  height: 100%;
 }
 ul{
   margin:0px;
@@ -29,14 +28,28 @@ span{
   margin: 1em 0;
 }
 
+.moneyCount {
+   
+    margin-top: 250px;
+}
+
+
 #add,#deleteBt{
   width: 150px;
+   margin-bottom: 0.5em;
  
-  margin-left: 220px;
   font-size: 1.2em;
   cursor:pointer;
+  
 
 }
+#add{
+  margin-top: 250px;
+}
+#deleteBt{
+ margin-top: 20px;
+}
+
 label {
  
   display: inline-block;
@@ -68,16 +81,16 @@ td,th{
 }
 
 #tableSubGroup {
-    max-height:  400px;
-    overflow: auto;
-     
-    ::-webkit-scrollbar{width:5px};
+    height:  250px; 
+    overflow: scroll;
+    width: 450px;
+    /*border: 1px groove black;*/
 }
 #tableGroup table {
-
+ 
   text-align:center;
   border-collapse: collapse;
-  /*margin-bottom: 2em;*/
+
   
 }
 
@@ -134,7 +147,17 @@ ol{
 }
 #holder{
   /*z-index: -1;*/
-  margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
+  width:700px;height:700px;  overflow: hidden;
+}
+
+#sum{
+
+  position: absolute;
+  top:75%;
+  text-align: center;
+  font-size: 1.5em;
+  width: 100%;
+}
 
 
 #tips{
@@ -148,9 +171,6 @@ ol{
   bottom: 1%;
   right: 2%;
   width: 60px;
-}
-#moneyCount {
-  margin-top: 2em;
 }
 
 p.tableTitle{
@@ -169,45 +189,154 @@ p.tableTitle{
   top: 0;
   right: 1%;
 }
+
+.header{
+  position: absolute;
+  width: 100%;
+  height: 10%;
+ 
+}
+h1{
+  text-align: center;
+}
+.left{
+  position: absolute;
+  width: 55%;
+  height: 90%;
+  bottom: 0%;
+ 
+  padding-left: 5%;
+
+}
+
+.left1{
+  width: 60%;
+  float: left;
+}
+.left2{
+  width: 40%;
+  height: 100%;
+  float: left;
+}
+#pie{
+  position: absolute;
+  top:10%;
+  right: 2%;
+  width: 50%;
+  height: 100%;
+}
+.right{
+  position: absolute;
+  width: 40%;
+  height: 90%;
+  right: 0%;
+  bottom: 0%;
+  overflow: scroll;
+
+}
+
+.section{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0%; 
+  z-index: 0;
+  overflow: hidden;
+}
+#console{
+  background-color: gold;
+  color: white;
+  position: fixed;
+  z-index: 2;
+}
+
+ canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+#canvasFrame{
+  width: 75%;
+  margin-left: 90px;
+  margin-top: 150px;
+}
+
 </style>
 
-<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="scripts/raphael-min.js"></script>
+
 
 </head>
  
 <body  >
-<h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
- 
-<div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
 
-<img id ="illidaria" src="img/Illidaria.png"></img>
-<div id = "dataInput"> </div>
- <div><img  id="add" src="img/buttonOut.png"></img></div>
-<!-- <button id="add">加入账本</button> -->
-<button id = "clearBt" onclick="clearAll()">不要点</button>
-<div id = "tablePerch">
+<div><p id ="console"></p></div>
+<div id = "pagesGroup">
+  <div class = "section"> 
+    <div class = "header">
+      <h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
+    </div>
+    <div class = "left"> 
+      <div class="left1">
+        <div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
+        <img id ="illidaria" src="img/Illidaria.png"></img>
+        <div id = "dataInput"> </div>
+      
+        
+        <!-- <button id="add">加入账本</button> -->
+        <button id = "clearBt" onclick="clearAll()">不要点</button>
+        <div id = "tablePerch"></div>
+      </div>
+      <div class = "left2">
+        <div><img  id="add" src="img/buttonOut.png"></img></div>
+        <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
+      </div>
+      
+    </div>     
     
+    <div class = "right"> 
+      
+    </div> 
+    <div id = "pie">  </div>
+  </div>
+
+  <div class = "section"> 
+    <!-- <button id = "genTimeLine"> 生成时间轴</button> -->
+    <div id="canvasFrame">
+    <canvas id="canvas"></canvas>
+    </div>
+  </div>
+  <div class = "section"> 
+
+  </div>
 </div>
- 
- <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
+
 </body>
- 
+
+<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="scripts/raphael-min.js"></script>
+<script  src = "scripts/myFullPages.js" type="text/javascript"></script>  
+<script src="scripts/Chart.bundle.js" type="text/javascript"></script>
 
 <script>
 
-var financeManager = {
-  canteen:{},
-  eatingOut:{},
-  fruit:{},
-  living:{},
-  dear:{},
-  learning:{},
-  connect:{}
-}
+ 
+ 
+$('#pagesGroup').myfullpage({ 
+        sectionsColor: ["#f4efd9","RGB(255,250,240)","#242529","#eeaf16","#59568b","#eaf0fc","#ece9e0","#e8eec2"],
+        anchors: ["page1","page2","page3","page4","page5","page6","page7"],
+        // title: ["这是第","页"],
+        scrollSpeed:700
+         
+      });
+
+
+//恢复 tableSubGroup 的滚动功能
+    var myconsole = $("#console");
+
+
 
 var category = ["食堂","外面吃饭","水果和零食","生活用品","晓清非要花的","学习","娱乐","通讯和交通"] ;
-var categoryEle = ["canteen","eatingOut","fruit","living","dear","learning","fun","connect"];
+var cateAnchors = ["canteen","eatingOut","fruit","living","dear","learning","fun","connect"];
 
   
  
@@ -219,7 +348,13 @@ function insertNcell(eleTb,n){
 }
 
 
-
+function sumOfObj(obj){
+  var sum = 0;
+  for (var i in obj){
+    sum += obj[i];
+  }
+  return sum;
+}
 
 
 
@@ -248,6 +383,10 @@ $(function(){
   var currentTabNum = 0;
 
 
+  initialInput();
+  update();
+
+
   function initialInput(){
   var inputTb = document.createElement("table");
 
@@ -261,10 +400,10 @@ $(function(){
 
    inputEle = {};
   for (var i = 0; i < category.length; i++) {
-      inputEle[categoryEle[i]] =  document.createElement("input");
-      inputEle[categoryEle[i] + 'Bk'] =  document.createElement("input");
-      inputEle[categoryEle[i]].className = "money";
-      inputEle[categoryEle[i]].setAttribute("type","number")
+      inputEle[cateAnchors[i]] =  document.createElement("input");
+      inputEle[cateAnchors[i] + 'Bk'] =  document.createElement("input");
+      inputEle[cateAnchors[i]].className = "money";
+      inputEle[cateAnchors[i]].setAttribute("type","number")
  
   }
 
@@ -272,9 +411,9 @@ $(function(){
     insertNcell(inputTb,4);
     inputTb.rows[inputTb.rows.length - 1].cells[0].innerHTML = category[i];
     inputTb.rows[inputTb.rows.length - 1].cells[1].innerHTML = "￥";
-    inputTb.rows[inputTb.rows.length - 1].cells[1].appendChild(inputEle[categoryEle[i]]);
+    inputTb.rows[inputTb.rows.length - 1].cells[1].appendChild(inputEle[cateAnchors[i]]);
 
-    inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[categoryEle[i] +'Bk']);
+    inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[cateAnchors[i] +'Bk']);
      
   }
    document.getElementById("dataInput").appendChild(inputTb);
@@ -283,15 +422,18 @@ $(function(){
   
 }
 
-    initialInput();
-
 function update(){
   if($("#tableGroup")){
     $("#tableGroup").remove();
   }
    // $("#tableGroup").appendTo("body");
- 
+  if($("div.left2 p")){
+    $("div.left2 p").remove();
+  }
   var warpDiv = $("<div   id = 'tableSubGroup'></div>");
+
+ 
+ 
   var tabUl = $("<div  ></div>");
   var selectTab = $("<ul id ='selectTab' class ='clear'></ul>")
   selectTab.appendTo(tabUl);
@@ -306,13 +448,13 @@ function update(){
     if (j== currentTabNum){
       tab.addClass("currentTab");
     }
-    moneyCount[categoryEle[j]] = 0;
-    if(window.localStorage[categoryEle[j]] ){
-     listShow[categoryEle[j]] =  JSON.parse( window.localStorage[categoryEle[j]] );
+    moneyCount[cateAnchors[j]] = 0;
+    if(window.localStorage[cateAnchors[j]] ){
+     listShow[cateAnchors[j]] =  JSON.parse( window.localStorage[cateAnchors[j]] );
       
   }
   else{
-    listShow[categoryEle[j]] = [];
+    listShow[cateAnchors[j]] = [];
     
   }
  
@@ -321,19 +463,20 @@ function update(){
   //表头
    var newTitleRow = $(" <p class = 'clear tableTitle'>    <span>金额</span>  <span>花哪去了</span> <span>哪天花的</span>  </p> "); 
     
-  for (var i = 0; i < Object.keys(listShow[categoryEle[j]]).length ; i++) {
-      newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
-      moneyCount[categoryEle[j]] += +listShow[categoryEle[j]][i][0];
+  for (var i = 0; i < Object.keys(listShow[cateAnchors[j]]).length ; i++) {
+      newRow = $("<tr><td>￥"+listShow[cateAnchors[j]][i][0]+"</td><td>"+listShow[cateAnchors[j]][i][1]+"</td><td>"+listShow[cateAnchors[j]][i][2]+"</td></tr>");  
+      moneyCount[cateAnchors[j]] += +listShow[cateAnchors[j]][i][0];
     newTable.append(newRow);
   }
 
-  if(Object.keys(listShow[categoryEle[j]]).length %2 ){
+  if(Object.keys(listShow[cateAnchors[j]]).length %2 ){
     var nullRow = $("<tr><td></td></tr>");
     nullRow.hide();
     newTable.append(nullRow);
   }
-  newTable.append("<p id='moneyCount' >总额是: ￥<strong>"+ (moneyCount[categoryEle[j]]||0)+"</strong></p>")
-   
+  var deleteBt = $("div.left2 #deleteBt").parent();
+  deleteBt.before("<p class='moneyCount' >该项总计: ￥<strong>"+ (moneyCount[cateAnchors[j]])+"</strong></p>")
+  
   if(j == currentTabNum){
     newTable.appendTo(warpDiv);
   }
@@ -343,6 +486,8 @@ function update(){
   
   
 } 
+
+
   selectTab.append("<div class = 'clear'/>");
    var $newTableGroup = $("<div id = 'tableGroup' ></div>");
  
@@ -358,8 +503,10 @@ function update(){
     var index = $selectLi.index(this);
     currentTabNum = index;
     $("#tableGroup table:eq("+index+")").show( ).siblings().hide();
+    $("div.left2 p:eq("+index +")").show( ).siblings("p").hide();
   })
 
+  $("div.left2 p:eq("+currentTabNum+")").show().siblings("p").hide();;
 
 
   $("#tableGroup tr:even,this").addClass("gray"); 
@@ -377,15 +524,36 @@ function update(){
 
   $("#selectTab li").css({"cursor":"pointer"});
 
-
+ 
+ 
   genPieChart(moneyCount);
   draw();
-}
-  
-update();
-  
+ 
+    //解决滚动冲突问题
+    $("#tableSubGroup")[0].addEventListener("mousewheel",function(e){
+      var scrollTop = this.scrollTop,
+                scrollHeight = this.scrollHeight,
+                height = this.clientHeight,
+                delta = e.wheelDelta;
+
+      if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
+        this.scrollTop = delta > 0? 0: scrollHeight;
+                // 向上滚 || 向下滚
+        event.preventDefault();
+
+      }
+      else{
+        e.stopPropagation();
+      }
+   
+  });
 
 
+
+  }
+  
+  
+  
   $("#add").mousedown(function(){
      this.src = "img/buttonIn.png";
   }).mouseup(function(){
@@ -433,10 +601,10 @@ update();
          
         inputTb.rows[i+1].cells[1].children[0].value = "";
         inputTb.rows[i+1].cells[2].children[0].value = "";
-        curTbLen = getStroagelength(categoryEle[i]);
+        curTbLen = getStroagelength(cateAnchors[i]);
         objTemp.push([money,backup,date]);
   
-        localStorageAddItem( categoryEle[i], JSON.stringify( objTemp ));
+        localStorageAddItem( cateAnchors[i], JSON.stringify( objTemp ));
       
       }
     }
@@ -450,6 +618,7 @@ update();
 
 });
 
+//delete button
   $("#deleteBt").click(function(){
 
     var $checkedBox = $("#tableSubGroup table:visible input:checked"); 
@@ -465,17 +634,132 @@ update();
 
     var nthTable = $checkedBox.parents("table").index();
     currentTabNum = nthTable;
-    deleteTable =  JSON.parse( window.localStorage[categoryEle[nthTable]]);
+    deleteTable =  JSON.parse( window.localStorage[cateAnchors[nthTable]]);
     for (var i = itemsNum.length - 1; i >= 0; i--) {
        deleteTable.splice(itemsNum[i],1);
     }
      
-    window.localStorage[categoryEle[nthTable]] = JSON.stringify(deleteTable);
+    window.localStorage[cateAnchors[nthTable]] = JSON.stringify(deleteTable);
 
       update();
     }
-  })
+  });
+
+  //生成账单时间轴
+
+  var timeLabels = [];
+  var timeValue = [];
+
+  function timeLine( ){
+    var storageList = [];
+    var dataArr = [];
+    for (var j = 0; j < cateAnchors.length; j++) {
+      if(window.localStorage[cateAnchors[j]] ){
+        storageList[cateAnchors[j]] =  JSON.parse( window.localStorage[cateAnchors[j]] );
+      }
+
+      for (var i = 0; i < Object.keys(storageList[cateAnchors[j]]).length ; i++) {
+        var date = dateFormat(storageList[cateAnchors[j]][i][2]);
+
+        if( dataArr[date]){
+          dataArr[date] +=  +storageList[cateAnchors[j]][i][0];
+        }
+        else{
+          dataArr[date] =   +storageList[cateAnchors[j]][i][0];
+        }
+     
+    
+ 
+      }
+
+    }
+
+    for (var i in dataArr) {
+      timeLabels.push(i);
+      timeValue.push(dataArr[i])
+
+    }
+  }
+
+  function dateFormat(date){
+ 
+    return date.substr(-5,2)+"/"+date.substr(-2,2)+"/"+date.substr(0,4);
+
+  }
+  var timeFormat = 'MM/DD/YYYY';
+
+  function randomColorFactor() {
+      return Math.round(Math.random() * 255);
+  }
+
+  function randomColor(opacity) {
+      return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+  }
   
+  timeLine();
+
+  var config = {
+      type: 'bar',
+      data: {
+        labels: timeLabels,
+        datasets: [{
+          type: 'bar',
+          label: '每日账单',
+          backgroundColor: "red",
+          data: timeValue,
+          borderColor: 'white',
+          borderWidth: 0,
+          radius: 3,
+        } ,{
+          type: 'bar',
+          label: ' ',
+          backgroundColor: "rgba(0,0,0,0)",
+          data: [1,2,3,4,5,6,8 ],
+         
+        } ,{
+          type: 'bar',
+          label: ' ',
+          backgroundColor: "rgba(0,0,0,0)",
+          data: [1,2,3,4,5,6,8 ],
+           
+        } , ]
+      },
+      options: {
+        showLines: true,
+        responsive: true,
+                title:{
+                    display:true,
+                    text:"账单time line"
+                },
+        scales: {
+          xAxes: [{
+            type: "time",
+            display: true,
+            time: {
+              format: timeFormat,
+              // round: 'day'
+            }
+          }],
+        },
+      }
+    };
+   
+    $.each(config.data.datasets, function(i, dataset) {
+      if(i == 0){
+
+      dataset.borderColor = randomColor(0.4);
+      dataset.backgroundColor = randomColor(0.5);
+      dataset.pointBorderColor = randomColor(0.7);
+      dataset.pointBackgroundColor = randomColor(0.5);
+      dataset.pointBorderWidth = 2;
+        }
+    });
+    // $("#genTimeLine").click(function(){
+       var ctx = document.getElementById("canvas").getContext("2d");
+      window.myLine = new Chart(ctx, config);
+
+    // });
+   
 
 
 });
@@ -487,25 +771,27 @@ function genPieChart( obj){
   if($("#pieChart")){
     $("#pieChart").remove();
   }
-
+   
   $newPieChart = $("<table id = 'pieChart' ></table>");
   $newPieChart.appendTo("body");
   if($("#holder")){
     $("#holder").remove();
   }
-  $newPie  = $("<div id = 'holder' ></div>");
-  $newPie.appendTo("body");
+  $newPie  = $("<div id = 'holder' ><p id ='sum'>总花费:"+sumOfObj(obj)+"</p></div>");
+  // $newPie.wrapInner("#sum");
+  $newPie.appendTo("#pie");
+
   $pie = $("#pieChart");
   percent = calPercent(obj);
   for (var i = 0; i < category.length; i++) {
         
-        if(obj[categoryEle[i]]){
-          if(!/\./.test(obj[categoryEle[i]])){
-           obj[categoryEle[i]] = obj[categoryEle[i]] +".00";
+        if(obj[cateAnchors[i]]){
+          if(!/\./.test(obj[cateAnchors[i]])){
+           obj[cateAnchors[i]] = obj[cateAnchors[i]] +".00";
           }
           var $pieTr = $("<tr></tr>");
-          var $pieTh = $("<th>" + category[i] + "\n总计￥"+parseFloat(obj[categoryEle[i]]).toFixed(2)+"\n"+percent[i]+"%</th>");
-          var $pieTd = $("<td>" + obj[categoryEle[i]] + "</td>"); 
+          var $pieTh = $("<th>" + category[i] + "\n总计￥"+parseFloat(obj[cateAnchors[i]]).toFixed(2)+"\n"+percent[i]+"%</th>");
+          var $pieTd = $("<td>" + obj[cateAnchors[i]] + "</td>"); 
           $pieTr.append($pieTh);
           $pieTr.append($pieTd);
           $pie.append($pieTr);
@@ -535,7 +821,7 @@ function clearAll(){
     if(confirm("点了数据就全没了！真的要这么做吗")){
     for (var i = 0; i < category.length; i++) {
     
-    window.localStorage[categoryEle[i]]= '';
+    window.localStorage[cateAnchors[i]]= '';
   }
    location.reload();
   }
@@ -600,6 +886,9 @@ function draw() {
     $("#pieChart").hide();
     Raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
 };
+
+
+
 
 </script>
 
