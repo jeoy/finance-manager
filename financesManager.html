@@ -9,12 +9,15 @@
 <meta charset = "utf-8"/>
 <style type="text/css">
 html,body{
+
   height: 100%;
+  padding: 0px;
+  margin : 0px;
 }
 ul{
   margin:0px;
 }
-
+ 
 span{
   display: inline-block;
   width: 90px; 
@@ -29,8 +32,8 @@ span{
 }
 
 .moneyCount {
-   
-    margin-top: 250px;
+    margin-left: 10px;
+    margin-top: 68px;
 }
 
 
@@ -47,7 +50,7 @@ span{
   margin-top: 250px;
 }
 #deleteBt{
- margin-top: 20px;
+ margin-top: 0px;
 }
 
 label {
@@ -160,8 +163,8 @@ ol{
 #sum{
 
   position: absolute;
-  top:85%;
-
+  top:70%;
+  margin-left: 30px;
   text-align: center;
   font-size: 1.5em;
   width: 100%;
@@ -210,7 +213,7 @@ h1{
 }
 .left{
   position: absolute;
-  width: 55%;
+  width: 45%;
   height: 90%;
   bottom: 0%;
  
@@ -231,12 +234,12 @@ h1{
   position: absolute;
   top:0%;
   right: 2%;
-  width: 50%;
+  width: 100%;
   height: 100%;
 }
 .right{
   position: absolute;
-  width: 40%;
+  width: 50%;
   height: 90%;
   right: 0%;
   bottom: 0%;
@@ -245,13 +248,23 @@ h1{
 }
 
 .section{
+  margin: 0 auto;
   position: absolute;
-  width: 100%;
+   width: 100%;
   height: 100%;
-  left: 0%; 
-  z-index: 0;
+    z-index: 0;
   overflow: hidden;
 }
+
+.subSection{
+  margin: 0 auto;
+  position: absolute;
+   width: 1400px;
+  height: 100%;
+    z-index: 0;
+  overflow: hidden;
+}
+
 #console{
   background-color: gold;
   color: white;
@@ -281,31 +294,33 @@ h1{
 <div><p id ="console"></p></div>
 <div id = "pagesGroup">
   <div class = "section"> 
-    <div class = "header">
-      <h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
-    </div>
-    <div class = "left"> 
-      <div class="left1">
-        <div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
-        <img id ="illidaria" src="img/Illidaria.png"></img>
-        <div id = "dataInput"> </div>
-      
+      <!-- 左边绝对定位，右边auto -->
+    <div class = "subSection">    
+      <div class = "header">
+        <h1> 小薯条的记账本(financeManager)  v1.21</h1>
+      </div>
+      <div class = "left"> 
+        <div class="left1">
+          <div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
+          <img id ="illidaria" src="img/Illidaria.png"></img>
+          <div id = "dataInput"> </div>
         
-        <!-- <button id="add">加入账本</button> -->
-        <button id = "clearBt" onclick="clearAll()">不要点</button>
-        <div id = "tablePerch"></div>
-      </div>
-      <div class = "left2">
-        <div><img  id="add" src="img/buttonOut.png"></img></div>
-        <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
-      </div>
-      
+          
+          <!-- <button id="add">加入账本</button> -->
+          <button id = "clearBt" onclick="clearAll()">不要点</button>
+          <div id = "tablePerch"></div>
+        </div>
+        <div class = "left2">
+          <div><img  id="add" src="img/buttonOut.png"></img></div>
+          <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
+        </div>
+      </div>  
     </div>     
     
     <div class = "right"> 
-      
+     <div id = "pie">  </div> 
     </div> 
-    <div id = "pie">  </div>
+    
   </div>
 
   <div class = "section"> 
@@ -893,7 +908,7 @@ function draw() {
         labels.push($("th", this).text());
     });
     $("#pieChart").hide();
-    Raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
+    Raphael("holder", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
 };
 
 
