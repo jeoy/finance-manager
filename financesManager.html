@@ -336,7 +336,7 @@ h1{
 
 </body>
 
-<script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="scripts/raphael-min.js"></script>
 <script  src = "scripts/myFullPages.js" type="text/javascript"></script>  
 <script src="scripts/Chart.bundle.js" type="text/javascript"></script>
@@ -465,7 +465,7 @@ function update(){
       moneyCount = {};
 
   for (var j = 0; j < category.length; j++) {
-    var newTable = $("<table id = 'table"+j+"'></table>");
+    var newTable = $("<table ><tbody id = 'table"+j+"'></tbody></table>");
     var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
     selectTab.append(tab);
 
@@ -542,7 +542,7 @@ function update(){
      
 
   });
-  $("#tableGroup tr:contains('')").hide();
+  // $("#tableGroup tr:contains('')").hide();
   
   $("#tableGroup :radio:checked").parent().parent().css({"background-color":"gold"}); //这样会写成内联样式 后面的class修改不了
 
