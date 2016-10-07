@@ -1,0 +1,76 @@
+{
+	"files": {
+		"__main.less": {
+			"engines": [
+				{
+					"compiler": "less",
+					"output": "../css/bootstrap.css",
+					"options": {
+						"compress": false,
+						"ieCompat": false,
+						"strictMath": false,
+						"strictUnits": false,
+						"javascriptEnabled": false,
+						"sourceMap": true
+					}
+				}
+			],
+			"sources": [
+				"_carousel.less",
+				"_footer.less",
+				"_navbar.less",
+				"_page-contents.less",
+				"_pricing-tables.less",
+				"_variables.less",
+				"bootstrap/alerts.less",
+				"bootstrap/badges.less",
+				"bootstrap/breadcrumbs.less",
+				"bootstrap/button-groups.less",
+				"bootstrap/buttons.less",
+				"bootstrap/close.less",
+				"bootstrap/code.less",
+				"bootstrap/component-animations.less",
+				"bootstrap/dropdowns.less",
+				"bootstrap/forms.less",
+				"bootstrap/grid.less",
+				"bootstrap/input-groups.less",
+				"bootstrap/jumbotron.less",
+				"bootstrap/labels.less",
+				"bootstrap/list-group.less",
+				"bootstrap/media.less",
+				"bootstrap/mixins.less",
+				"bootstrap/modals.less",
+				"bootstrap/navs.less",
+				"bootstrap/normalize.less",
+				"bootstrap/pager.less",
+				"bootstrap/pagination.less",
+				"bootstrap/panels.less",
+				"bootstrap/popovers.less",
+				"bootstrap/print.less",
+				"bootstrap/progress-bars.less",
+				"bootstrap/responsive-utilities.less",
+				"bootstrap/scaffolding.less",
+				"bootstrap/tables.less",
+				"bootstrap/thumbnails.less",
+				"bootstrap/tooltip.less",
+				"bootstrap/type.less",
+				"bootstrap/utilities.less",
+				"bootstrap/wells.less",
+				"font-awesome/animated.less",
+				"font-awesome/bordered-pulled.less",
+				"font-awesome/core.less",
+				"font-awesome/fixed-width.less",
+				"font-awesome/font-awesome.less",
+				"font-awesome/icons.less",
+				"font-awesome/larger.less",
+				"font-awesome/list.less",
+				"font-awesome/mixins.less",
+				"font-awesome/path.less",
+				"font-awesome/rotated-flipped.less",
+				"font-awesome/screen-reader.less",
+				"font-awesome/stacked.less",
+				"font-awesome/variables.less"
+			]
+		}
+	}
+}

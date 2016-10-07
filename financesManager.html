@@ -18,11 +18,27 @@ ul{
   margin:0px;
 }
  
-span{
+
+nav span{
+  font-size: 1em;
+  vertical-align: middle;
+}
+nav a{
+  font-size: 1.3em;
+}
+.tableTitle span{
   display: inline-block;
   width: 90px; 
   text-align: center;
   margin-right: 5px;
+}
+
+.tableTitle span +span{
+  width: 120px;
+}
+
+.tableTitle span +span +span{
+  width: 90px;
 }
 #dataInput{
   margin: 1em 0;
@@ -32,14 +48,15 @@ span{
 }
 
 .moneyCount {
-    margin-left: 10px;
-    margin-top: 68px;
+    /*margin-left: 10px;*/
+    float: left;
+    margin-top: 20px;
 }
 
 
 #add,#deleteBt{
   width: 150px;
-   margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
  
   font-size: 1.2em;
   cursor:pointer;
@@ -47,10 +64,15 @@ span{
 
 }
 #add{
-  margin-top: 250px;
+  margin-left: 200px;
+}
+#deleteBtDiv{
+  margin-left: 150px;
+  width: 450px;
 }
 #deleteBt{
- margin-top: 0px;
+  float: right;
+  margin-right: 20px;
 }
 
 label {
@@ -66,12 +88,24 @@ input {
   border: rgb(200,200,200) solid 0.5px;
 
 }
+
+.inputLeft{
+  padding-left: 50px;
+}
 input.money{
   margin-bottom: 3px;
   width: 50px;
 
 }
-
+.sectionTitle{
+  margin:20px;
+  margin-bottom: 70px;
+  font-size: 4.5em;
+  color: #dcaba1;
+}
+#datePara{
+  margin-top: 10px;
+}
 .focus{
   background: gold;
  
@@ -84,12 +118,34 @@ td,th{
     text-align: center;
  
 }
+td + td +td {
+   min-width: 148px;
+}
+
+td + td +td +td{
+   min-width: 100px;
+}
+
+#tablePerch{
+  margin-top: 100px;
+  margin-left: 50px;
+  width: 450px;
+}
+
+@media (min-width: 768px) {
+  #tablePerch{
+  margin-left: 120px;
+  width: 450px;
+  }
+}
 
 #tableSubGroup {
     height:  250px; 
     overflow: scroll;
     width: 450px;
-    /*border: 1px groove black;*/
+ 
+     border: 2px groove gray;
+      border: 1px solid rgba(220,171,161,0.5);
 }
 #tableGroup table {
  
@@ -100,11 +156,11 @@ td,th{
   
 }
 
-#tableGroup table tbody{
-     margin-bottom: 2em;
+#tableGroup table  {
+ 
       border-radius: 5px;
-     border: 2px groove gray;
-   
+     border-bottom: 2px groove gray;
+     border: 1px solid rgba(220,171,161,1);
 }
 
 
@@ -114,16 +170,38 @@ tr{
    border-radius: 5px;
   /*border: 1px solid gold ;*/
 }
-li{
+#selectTab {
+  margin:0 auto;
+   width: 450px;
+}
+#selectTab span{
+  font-size:15px;
+  margin-right: 5px;
+}
+#selectTab li{
   float: left;
   text-align: center;
   list-style:  none;
-  width:  55px;
+  width:  112px;
   height: 55px;
-  border: 1px black solid;
-   border-radius: 5px;
-  /*background-color: gray;*/
+  vertical-align: middle;
+  padding: 20px 0px;
+  border: 0.5px solid rgba(220,171,161,0.2);
+  transition:  color 1s;
+  -moz-transition: color   1s; /* Firefox 4 */
+  -webkit-transition:color    4s; /* Safari and Chrome */
+  -o-transition:color 1s;  /* Opera */
+  transition: background-color 1s;
+  -moz-transition: background-color   1s; /* Firefox 4 */
+  -webkit-transition:background-color  1s; /* Safari and Chrome */
+  -o-transition:background-color 1s;  /* Opera */
+
+ 
 }
+#selectTab li:hover{
+  background-color: #dcaba1;
+  /*color: white;*/
+  }
 ul{
   /*margin: 0px;*/
   padding: 0px;
@@ -134,7 +212,7 @@ ul{
 
 }
 .currentTab{
-  background-color: #cbbba1;
+  background-color: #dcaba1;
   color: white;
 }
 .gray{
@@ -148,23 +226,16 @@ ul{
 
 
 
-ol{
-  height: 200px;
-  overflow: scroll;
-  border: 1px groove gray;
-  width:300px;
-   border-radius: 5px;
-}
-#holder{
+ 
+.holder{
   /*z-index: -1;*/
-  width:700px;height:700px;  overflow: hidden;
+  margin:0 auto;
+  width:700px;  overflow: hidden;
 }
 
 #sum{
-
-  position: absolute;
-  top:67%;
-  margin-left: 300px;
+  margin-top: -80px; 
+   margin-left: 300px;
   /*text-align: center;*/
   font-size: 1.5em;
   width: 100%;
@@ -185,13 +256,13 @@ ol{
 }
 
 p.tableTitle{
-
+  background-color: #cbbba1;
   margin:0px;
   margin-top: 5px; 
   padding: 5px 0;
-  width: 295px;
-  border: solid 1px black;
-   border-radius: 5px;
+  font-size: 18px;
+  /*width: 295px;*/
+ 
   /*background-color: red;*/
   padding-left: 115px;
 }
@@ -211,45 +282,23 @@ p.tableTitle{
 h1{
   text-align: center;
 }
-.left{
-  position: absolute;
-  width: 45%;
-  height: 90%;
-  bottom: 0%;
  
-  padding-left: 5%;
-
-}
 
 .left1{
-  width: 75%;
+  width: 80%;
   float: left;
 }
 .left2{
-  width: 25%;
+  width: 20%;
   height: 100%;
   float: left;
 }
-#pie{
-  position: absolute;
-  top:0%;
-  right: 2%;
-  width: 100%;
-  height: 100%;
-}
-.right{
-  position: absolute;
-  width: 50%;
-  height: 90%;
-  right: 0%;
-  bottom: 0%;
-  overflow: scroll;
-
-}
+ 
+ 
 
 .section{
   margin: 0 auto;
-  position: absolute;
+  /*position: absolute;*/
    width: 100%;
   height: 100%;
     z-index: 0;
@@ -272,7 +321,7 @@ h1{
   z-index: 2;
 }
 
- canvas {
+canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
@@ -280,78 +329,181 @@ h1{
 #canvasFrame{
   width: 75%;
   margin-left: 90px;
-  margin-top: 100px;
+  /*margin-top: 20px;*/
 }
 
-</style>
+#welcome{
 
+  height: 800px;
+
+}
+
+#inputSec{
+  height: 800px;
+  padding-top: 50px;
+  background-color: #f4efd9;
+}
+
+#pieSec{
+  padding-top: 50px;
+  height: 800px;
+}
+#pie{
+  margin-top: -70px;
+}
+#barSec{
+    padding-top: 100px;
+  height: 800px;
+    background-color: #fafafa;
+}
+.navbar-header,
+.navbar-collapse{
+    background-color: #fff;
+}
+</style>
+<link rel="stylesheet" href="Bootstrap/css/bootstrap.css">
 
 
 </head>
  
-<body  >
+<body   data-spy="scroll" data-target=".navbar">
+<header role="banner">
+      <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><img src="img/Illidaria.png" alt="Bootstrappin'" width="40"></a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#welcome"><span class="icon fa fa-desktop"></span>    Welcome</a></li>
+              <li><a href="#inputSec"><span class="icon fa fa-money"></span>  写账本</a></li>
+              <li><a href="#pieSec"> <span class="icon fa fa-pie-chart"></span>  饼图统计</a></li>
+              <li><a href="#barSec"> <span class="icon fa fa-bar-chart-o"></span>  柱形图统计</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </nav>
+  </header>
+ 
+
 
 <div><p id ="console"></p></div>
-<div id = "pagesGroup">
-  <div class = "section"> 
-      <!-- 左边绝对定位，右边auto -->
-    <div class = "subSection">    
-      <div class = "header">
-        <h1> 小薯条的记账本(financeManager)  v1.21</h1>
+<!-- <div id = "pagesGroup"> -->
+
+  <section  id = "welcome"> 
+       <section id="welcome" class="jumbotron">
+        <div class="container">
+          <div class="welcome-message">
+            <h1><strong>小薯条</strong>的记账本 </h1>
+            <p>Flyfries' Finance Manager  <br><em>version</em> v2.01<a href="#inputSec" class="btn btn-lg btn-primary pull-right">开始记账  <span class="icon fa fa-arrow-circle-down"></span></a></p>
+          </div>
+        </div>
+      </section>
+
+  </section>
+
+  <section   id = "inputSec"> 
+    <div class="container">
+      <div class="col-sm-6 col-md-5 col-lg-5 ">
+        <div class = "sectionTitle"><span class="icon fa fa-money"></span>写账本</div>
+        <div class= "inputLeft">
+        <div id ="datePara"><p >这是 <input type="date" id="date" value =" "></input>的消费</p></div>
+ 
+        <div id = "dataInput"> </div>
+       
+        <button id = "clearBt" onclick="clearAll()">不要点</button>
+            <div><img  id="add" src="img/buttonOut.png"></img></div>
+        </div>
       </div>
-      <div class = "left"> 
-        <div class="left1">
-          <div><p id ="datePara">这是 <input type="date" id="date" value =" "></input>的消费</p></div>
-          <img id ="illidaria" src="img/Illidaria.png"></img>
-          <div id = "dataInput"> </div>
+      <div class = "col-sm-8 col-md-7 col-lg-7">
         
-          
-          <!-- <button id="add">加入账本</button> -->
-          <button id = "clearBt" onclick="clearAll()">不要点</button>
-          <div id = "tablePerch"></div>
-        </div>
-        <div class = "left2">
-          <div><img  id="add" src="img/buttonOut.png"></img></div>
-          <div><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
-        </div>
-      </div>  
-    </div>     
-    
-    <div class = "right"> 
-     <div id = "pie">  </div> 
-    </div> 
-    
-  </div>
-
-  <div class = "section"> 
-    <!-- <button id = "genTimeLine"> 生成时间轴</button> -->
-    <div id="canvasFrame">
-    <canvas id="canvas"></canvas>
+             <div id = "tablePerch"></div>
+            <div id = "deleteBtDiv"><img  id="deleteBt" src="img/deleteBtOut.png"></img></div>
+      </div>
     </div>
-  </div>
-  <div class = "section"> 
+      
+     
+    </div> 
+  </section>
+  <section  id = "pieSec"> 
+    <div class="container">
+      <div class = "sectionTitle"><span class="icon fa fa-pie-chart"></span>饼饼图</div>
+      <div id="homepage-feature" class="carousel slide">
+          <ol class="carousel-indicators">
+              <li data-target="#homepage-feature" data-slide-to="0" class="active"></li>
+              <li data-target="#homepage-feature" data-slide-to="1"></li>
+              <li data-target="#homepage-feature" data-slide-to="2"></li>
+              <li data-target="#homepage-feature" data-slide-to="3"></li>
+          </ol>
 
-  </div>
-</div>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" id = "pie">
+              <div class="item active">
+                  <!-- <img src="img/welcome.jpg"  ></img> -->
+                   
+              </div>
+              <div class="item">
+                  <!-- <img src="img/welcome.jpg" ></img> -->
+              </div>
+              <div class="item">
+                  <!-- <img src="img/welcome.jpg" alt="OKWU.edu Homepage"> -->
+              </div>
+              <div class="item">
+                  <!-- <img src="img/welcome.jpg" alt="OKWU.edu Homepage"> -->
+              </div>
+          </div><!-- /.carousel-inner -->
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#homepage-feature" data-slide="prev">
+              <span class="icon fa fa-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#homepage-feature" data-slide="next">
+              <span class="icon fa fa-chevron-right"></span>
+          </a>
+      </div>
+
+      
+     
+    </div>
+  </section>
+
+
+  <section   id = "barSec"> 
+     <div class="container">
+    <!-- <button id = "genTimeLine"> 生成时间轴</button> -->
+    <div class = "sectionTitle"><span class="icon fa fa-bar-chart"></span>各月柱形图</div>
+      <div id="canvasFrame">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+  </section>
+<!-- </div> -->
 
 </body>
 
 <script type="text/javascript" src="scripts/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="scripts/raphael-min.js"></script>
-<script  src = "scripts/myFullPages.js" type="text/javascript"></script>  
+<!-- <script  src = "scripts/myFullPages.js" type="text/javascript"></script>   -->
 <script src="scripts/Chart.bundle.js" type="text/javascript"></script>
-
+<script  src="Bootstrap/js/bootstrap.js"></script>
+<script src="scripts/main.js"></script>
+<script src="scripts/plugins.js"></script>
 <script>
 
  
  
-$('#pagesGroup').myfullpage({ 
-        sectionsColor: ["#f4efd9","RGB(255,250,240)","#242529","#eeaf16","#59568b","#eaf0fc","#ece9e0","#e8eec2"],
-        anchors: ["page1","page2","page3","page4","page5","page6","page7"],
-        // title: ["这是第","页"],
-        scrollSpeed:700
+// $('#pagesGroup').myfullpage({ 
+//         sectionsColor: ["#f4efd9","RGB(255,250,240)","#242529","#eeaf16","#59568b","#eaf0fc","#ece9e0","#e8eec2"],
+//         anchors: ["page1","page2","page3","page4","page5","page6","page7"],
+//         // title: ["这是第","页"],
+//         scrollSpeed:700
          
-      });
+//       });
 
 
 //恢复 tableSubGroup 的滚动功能
@@ -361,8 +513,8 @@ $('#pagesGroup').myfullpage({
 
 var category = ["食堂","外面吃饭","水果和零食","生活用品","晓清非要花的","学习","娱乐","通讯和交通"] ;
 var cateAnchors = ["canteen","eatingOut","fruit","living","dear","learning","fun","connect"];
+var iconArr = ["cutlery","glass","apple","shopping-cart","heart","book","film","phone"]
 
-  
  
 function insertNcell(eleTb,n){
   eleTb.insertRow();
@@ -404,6 +556,8 @@ function localStorageAddItem (itemName , addArr){
 
 $(function(){
 
+
+  
   var currentTabNum = 0;
 
 
@@ -466,7 +620,7 @@ function update(){
 
   for (var j = 0; j < category.length; j++) {
     var newTable = $("<table ><tbody id = 'table"+j+"'></tbody></table>");
-    var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
+    var tab = $("<li id = 'tab"+j+"'> <span class='icon fa fa-"+iconArr[j]+"'></span>"+category[j]+"</li>");
     selectTab.append(tab);
 
     if (j== currentTabNum){
@@ -498,8 +652,8 @@ function update(){
     nullRow.hide();
     newTable.append(nullRow);
   }
-  var deleteBt = $("div.left2 #deleteBt").parent();
-  deleteBt.before("<p class='moneyCount' >该项总计: ￥<strong>"+ (moneyCount[cateAnchors[j]])+"</strong></p>")
+  var deleteBt = $("#deleteBt").parent();
+  deleteBt.append("<p class='moneyCount' >该项总计: ￥<strong>"+ (moneyCount[cateAnchors[j]])+"</strong></p>")
   
   if(j == currentTabNum){
     newTable.appendTo(warpDiv);
@@ -527,10 +681,10 @@ function update(){
     var index = $selectLi.index(this);
     currentTabNum = index;
     $("#tableGroup table:eq("+index+")").show( ).siblings().hide();
-    $("div.left2 p:eq("+index +")").show( ).siblings("p").hide();
+    $("p.moneyCount:eq("+index +")").show( ).siblings("p").hide();
   })
 
-  $("div.left2 p:eq("+currentTabNum+")").show().siblings("p").hide();;
+  $("p.moneyCount:eq("+currentTabNum+")").show().siblings("p").hide();;
 
 
   $("#tableGroup tr:even,this").addClass("gray"); 
@@ -554,23 +708,23 @@ function update(){
   draw();
  
     //解决滚动冲突问题
-    $("#tableSubGroup")[0].addEventListener("mousewheel",function(e){
-      var scrollTop = this.scrollTop,
-                scrollHeight = this.scrollHeight,
-                height = this.clientHeight,
-                delta = e.wheelDelta;
+  //   $("#tableSubGroup")[0].addEventListener("mousewheel",function(e){
+  //     var scrollTop = this.scrollTop,
+  //               scrollHeight = this.scrollHeight,
+  //               height = this.clientHeight,
+  //               delta = e.wheelDelta;
 
-      if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
-        this.scrollTop = delta > 0? 0: scrollHeight;
-                // 向上滚 || 向下滚
-        event.preventDefault();
+  //     if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
+  //       this.scrollTop = delta > 0? 0: scrollHeight;
+  //               // 向上滚 || 向下滚
+  //       event.preventDefault();
 
-      }
-      else{
-        e.stopPropagation();
-      }
+  //     }
+  //     else{
+  //       e.stopPropagation();
+  //     }
    
-  });
+  // });
 
 
 
@@ -801,9 +955,16 @@ function genPieChart( obj){
   if($("#holder")){
     $("#holder").remove();
   }
-  $newPie  = $("<div id = 'holder' ><p id ='sum'>总花费:"+sumOfObj(obj)+"</p></div>");
+
   // $newPie.wrapInner("#sum");
-  $newPie.appendTo("#pie");
+  for (var i = 1; i <= 4; i++) {
+      var $newPie  = $("<div id = 'holder"+i+"' class = 'holder' ><p id ='sum'>总花费:"+sumOfObj(obj)+"</p></div>");
+      var pieHandle = $("#pie :nth-child("+i+")");
+      $newPie.appendTo(pieHandle);
+  }
+     
+
+ 
 
   $pie = $("#pieChart");
   percent = calPercent(obj);
@@ -908,7 +1069,11 @@ function draw() {
         labels.push($("th", this).text());
     });
     $("#pieChart").hide();
-    Raphael("holder", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
+    Raphael("holder1", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
+    Raphael("holder2", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
+    Raphael("holder3", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
+    Raphael("holder4", 700, 600).pieChart(350, 250, 150, values, labels, "#fff");
+
 };
 
 
