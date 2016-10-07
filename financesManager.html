@@ -360,6 +360,25 @@ canvas {
 .navbar-collapse{
     background-color: #fff;
 }
+
+#de{
+  font-size: 40px;
+  margin-left: -80px;
+  display: inline-block;
+  transform:rotate(7deg);
+-ms-transform:rotate(7deg);   /* IE 9 */
+-moz-transform:rotate(7deg);  /* Firefox */
+-webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+-o-transform:rotate(7deg);
+}
+
+h1{
+    transform:rotate(7deg);
+-ms-transform:rotate(7deg);   /* IE 9 */
+-moz-transform:rotate(7deg);  /* Firefox */
+-webkit-transform:rotate(-15deg); /* Safari 和 Chrome */
+-o-transform:rotate(7deg);
+}
 </style>
 <link rel="stylesheet" href="Bootstrap/css/bootstrap.css">
 
@@ -399,8 +418,8 @@ canvas {
        <section id="welcome" class="jumbotron">
         <div class="container">
           <div class="welcome-message">
-            <h1><strong>小薯条</strong>的记账本 </h1>
-            <p>Flyfries' Finance Manager  <br><em>version</em> v2.01<a href="#inputSec" class="btn btn-lg btn-primary pull-right">开始记账  <span class="icon fa fa-arrow-circle-down"></span></a></p>
+            <h1><strong>小薯条</strong><span id = "de">的</span><br>记账本 </h1>
+            <p>Flyfries' Finance Manager  <br><em>Version</em> v2.01<a href="#inputSec" class="btn btn-lg btn-primary pull-right">开始记账  <span class="icon fa fa-arrow-circle-down"></span></a></p>
           </div>
         </div>
       </section>
