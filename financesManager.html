@@ -972,12 +972,15 @@ function genPieChart( obj){
    
   $newPieChart = $("<table id = 'pieChart' ></table>");
   $newPieChart.appendTo("body");
-  if($("#holder")){
-    $("#holder").remove();
-  }
+  
 
   // $newPie.wrapInner("#sum");
   for (var i = 1; i <= 4; i++) {
+
+      if($("#holder"+i)){
+    $("#holder"+i).remove();
+     }
+
       var $newPie  = $("<div id = 'holder"+i+"' class = 'holder' ><p id ='sum'>总花费:"+sumOfObj(obj)+"</p></div>");
       var pieHandle = $("#pie :nth-child("+i+")");
       $newPie.appendTo(pieHandle);
