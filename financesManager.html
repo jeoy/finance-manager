@@ -366,10 +366,11 @@ canvas {
   margin-left: -80px;
   display: inline-block;
   transform:rotate(7deg);
--ms-transform:rotate(7deg);   /* IE 9 */
--moz-transform:rotate(7deg);  /* Firefox */
--webkit-transform:rotate(30deg); /* Safari 和 Chrome */
--o-transform:rotate(7deg);
+  
+  -ms-transform:rotate(7deg);   /* IE 9 */
+  -moz-transform:rotate(7deg);  /* Firefox */
+  -webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+  -o-transform:rotate(7deg);
 }
 
 h1{
@@ -624,8 +625,8 @@ function update(){
     $("#tableGroup").remove();
   }
    // $("#tableGroup").appendTo("body");
-  if($("div.left2 p")){
-    $("div.left2 p").remove();
+  if($("#deleteBtDiv p")){
+    $("#deleteBtDiv p").remove();
   }
   var warpDiv = $("<div   id = 'tableSubGroup'></div>");
 
