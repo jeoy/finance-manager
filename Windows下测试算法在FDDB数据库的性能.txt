@@ -1,0 +1,137 @@
+土鳖一只，开发只用过Windows操作系统。
+
+公司要提交人脸检测算法在FDDB数据库上的性能，时间赶，来不及学习linux啥啥了，在Windows下磕磕绊绊弄好了。
+
+记录一下，免得一转眼又忘了。
+
+
+1. 首先，FDDB官网上，下载图片和标注文件：
+http://vis-www.cs.umass.edu/fddb/
+
+FDDB的标注文件，分为图片名称文件FDDB-fold-01.txt、对应的标注文件：FDDB-fold-01-ellispe.txt，各有10个，我在这里做了合并，分别命名为Fold_all.txt和Elsp.txt.
+
+
+2. 人脸检测
+
+读Fold.txt文件，依照顺序做人脸检测，将检测结果输出出来，格式如下：
+<image name i>
+<number of faces in this image =im>
+<face i1>
+<face i2>
+...
+<face im>
+<face im>的表达形式有以下两种：
+  4 a. Rectangular regions
+       Each face region is represented as:
+       <left_x top_y width height detection_score> 
+  
+  4 b. Elliptical regions
+       Each face region is represented as:
+       <major_axis_radius minor_axis_radius angle center_x center_y detection_score>.
+这里要注意detection_score这个值，必须是个有参考意义的分数，不能像它的标注文件一样置为1，否则ROC曲线出不来。
+
+3. 然后就要进行到本文的重点了：运行评估程序，生成ROC曲线
+
+   在FDDB官网上下载评估程序：http://vis-www.cs.umass.edu/fddb/evaluation.tgz
+
+   尽管FDDB官网上FAQ做了说明，虽然我用mingw成功编译了evaluation，但是后续用perl生成ROC曲线脚本仍然有非windows的命令，所以这里我放弃了mingw的方法。
+
+   转而使用了我最熟悉的vs。
+
+   建立VS工程FDDBEvaluation，将evaluation中的源码添加到工程，配置OPENCV等，修改main函数里以下内容：
+
+
+  string baseDir = "F:/Data/FDDB/";
+  string listFile = "D:/fold_all.txt";
+  string detFile = "D:/output.txt";
+  string annotFile = "D:/Elsp_all.txt";
+
+  还要注意  detFormat = DET_RECTANGLE; 如果你的检测输出是椭圆，这里就要改成椭圆。
+
+
+  编译通过，运行。
+
+
+运行结束之后，生成两个ROC文件：
+
+DiscRoc.txt和ContRoc.txt，这就是最终要画图ROC的数据。
+
+
+4. 生成ROC图数据
+
+    安装perl，我装的是strawberry-perl-5.22.0.1-64bit，网上搜索下载就行。
+
+    然后，修改官网提供的runEvaluate.pl，否则有些命令执行不了。。。
+
+    我修改后是这样的：
+
+    #!/usr/bin/perl -w
+  use strict;
+#### VARIABLES TO EDIT ####
+# where gnuplot is
+my $GNUPLOT = "D:/Program Files (x86)/gnuplot/bin/gnuplot"; 
+# where the binary is
+my $evaluateBin = "evaluate"; 
+# where the images are
+my $imDir = "F:/Data/FDDB"; 
+# where the folds are
+my $fddbDir = "F:/Data/FDDB/FDDB-folds"; 
+# where the detections are
+my $detDir = "D:/"; 
+###########################
+
+
+my $detFormat = 0; # 0: rectangle, 1: ellipse 2: pixels
+
+
+sub makeGNUplotFile
+{
+  my $rocFile = shift;
+  my $gnuplotFile = shift;
+  my $title = shift;
+  my $pngFile = shift;
+
+
+  open(GF, ">$gnuplotFile") or die "Can not open $gnuplotFile for writing\n"; 
+  #print GF "$GNUPLOT\n";
+  print GF "set term png\n";
+  print GF "set size .75,1\n";
+  print GF "set output \"$pngFile\"\n";
+  #print GF "set xtics 100\n";
+  #print GF "set logscale x\n";
+  print GF "set ytics .1\n";
+  print GF "set grid\n";
+  #print GF "set size ratio -1\n";
+  print GF "set ylabel \"True positive rate\"\n";
+  print GF "set xlabel \"False positives\"\n";
+  #print GF "set xr [0:500]\n";
+  print GF "set yr [0:1]\n";
+  print GF "set key right bottom\n";
+  print GF "plot \"$rocFile\" using 2:1 title \"$title\" with lines lw 2 \n";
+  close(GF);
+}
+
+
+my $gpFile = "D:/ContROC.p";
+my $gpFile1 = "D:/DiscROC.p";
+my $title = "zhouzhou";
+
+# plot the two ROC curves using GNUplot
+makeGNUplotFile("D:/ContROC.txt", $gpFile, $title, $detDir."ContROC.png");
+makeGNUplotFile("D:/DiscROC.txt", $gpFile1, $title, $detDir."DiscROC.png");
+
+然后，cmd->perl runEvaluate.pl
+
+酱紫地：
+
+然后就发现生成了两个.p文件：
+
+5. 画ROC曲线
+
+安装GUNPLOT，我装的gp501-win32-mingw。
+
+打开刚才生成的两个.p文件，file->output，将可以看见生成的ROC曲线啦。
+
+
+
+6.以上基本完工，如果想将自己的结果与官网上其他公司公布的结果画在一起，在官网上下载ContROC.p,DiscRoc.p等，用写字板打开之后，将自己的检测结果添加进去，同样用gnuplot画出来就行
